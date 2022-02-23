@@ -10,7 +10,14 @@ const Button = ({ onClick, text }) => {
   );
 }
 
-const StatisticLine = ({ text, value }) => <p>{text} {value}</p>;
+const StatisticLine = ({ text, value }) => {
+  return(
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  );
+};
 
 const Statistics = ({ data }) => {
   if (data.good + data.neutral + data.bad === 0) {
@@ -19,14 +26,16 @@ const Statistics = ({ data }) => {
     );
   }
   return (
-    <>
-      <StatisticLine text='good' value={data.good} />
-      <StatisticLine text='neutral' value={data.neutral} />
-      <StatisticLine text='bad' value={data.bad} />
-      <StatisticLine text='all' value={data.good + data.neutral + data.bad} />
-      <StatisticLine text='average' value={(data.good - data.bad) / (data.good + data.neutral + data.bad)} />
-      <StatisticLine text='positive' value={(data.good / (data.good + data.neutral + data.bad) * 100) + ' %'} />
-    </>
+    <table>
+      <tbody>
+        <StatisticLine text='good' value={data.good} />
+        <StatisticLine text='neutral' value={data.neutral} />
+        <StatisticLine text='bad' value={data.bad} />
+        <StatisticLine text='all' value={data.good + data.neutral + data.bad} />
+        <StatisticLine text='average' value={(data.good - data.bad) / (data.good + data.neutral + data.bad)} />
+        <StatisticLine text='positive' value={(data.good / (data.good + data.neutral + data.bad) * 100) + ' %'} />
+      </tbody>
+    </table>
   );
 };
 
