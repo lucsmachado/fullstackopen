@@ -13,9 +13,13 @@ const Button = ({ onClick, text }) => {
 const Feedback = ({ text, number }) => <p>{text} {number}</p>;
 
 const Statistics = ({ data }) => {
+  if (data.good + data.neutral + data.bad === 0) {
+    return(
+      <p>No feedback given</p>
+    );
+  }
   return (
     <>
-      <Heading title='statistics' />
       <Feedback text='good' number={data.good} />
       <Feedback text='neutral' number={data.neutral} />
       <Feedback text='bad' number={data.bad} />
@@ -39,6 +43,7 @@ const App = () => {
       <Button onClick={addOne(good, setGood)} text='good' />
       <Button onClick={addOne(neutral, setNeutral)} text='neutral' />
       <Button onClick={addOne(bad, setBad)} text='bad' />
+      <Heading title='statistics' />
       <Statistics data={{good, neutral, bad}} />
     </div>
   );
