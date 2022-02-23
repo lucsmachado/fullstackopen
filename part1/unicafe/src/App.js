@@ -29,6 +29,9 @@ const App = () => {
       <Feedback text='good' number={good} />
       <Feedback text='neutral' number={neutral} />
       <Feedback text='bad' number={bad} />
+      <Feedback text='all' number={good + neutral + bad} />
+      <Feedback text='average' number={(good - bad) / (good + neutral + bad)} />
+      <Feedback text='positive' number={(good / (good + neutral + bad) * 100) + ' %'} />
     </div>
   );
 };
