@@ -10,7 +10,7 @@ const Button = ({ onClick, text }) => {
   );
 }
 
-const Feedback = ({ text, number }) => <p>{text} {number}</p>;
+const StatisticLine = ({ text, value }) => <p>{text} {value}</p>;
 
 const Statistics = ({ data }) => {
   if (data.good + data.neutral + data.bad === 0) {
@@ -20,12 +20,12 @@ const Statistics = ({ data }) => {
   }
   return (
     <>
-      <Feedback text='good' number={data.good} />
-      <Feedback text='neutral' number={data.neutral} />
-      <Feedback text='bad' number={data.bad} />
-      <Feedback text='all' number={data.good + data.neutral + data.bad} />
-      <Feedback text='average' number={(data.good - data.bad) / (data.good + data.neutral + data.bad)} />
-      <Feedback text='positive' number={(data.good / (data.good + data.neutral + data.bad) * 100) + ' %'} />
+      <StatisticLine text='good' value={data.good} />
+      <StatisticLine text='neutral' value={data.neutral} />
+      <StatisticLine text='bad' value={data.bad} />
+      <StatisticLine text='all' value={data.good + data.neutral + data.bad} />
+      <StatisticLine text='average' value={(data.good - data.bad) / (data.good + data.neutral + data.bad)} />
+      <StatisticLine text='positive' value={(data.good / (data.good + data.neutral + data.bad) * 100) + ' %'} />
     </>
   );
 };
