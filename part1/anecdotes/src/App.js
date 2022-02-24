@@ -43,6 +43,8 @@ const App = () => {
     setVotes(updatedVotes);
   };
 
+  const indexOfMax = (array) => array.indexOf(Math.max(...array));
+
   return (
     <>
       <Heading text='Anecdote of the day' />
@@ -50,7 +52,7 @@ const App = () => {
       <Button onClick={handleVote} text='vote' />
       <Button onClick={selectRandom(anecdotes)} text='next anecdote' />
       <Heading text='Anecdote with most votes' />
-      <Anecdote text={anecdotes[votes.indexOf(Math.max(...votes))]} votes={votes[votes.indexOf(Math.max(...votes))]} />
+      <Anecdote text={anecdotes[indexOfMax(votes)]} votes={votes[indexOfMax(votes)]} />
     </>
   );
 };
