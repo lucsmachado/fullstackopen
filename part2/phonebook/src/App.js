@@ -10,11 +10,15 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newPerson = {
-      name: newName
-    };
-    setPersons(persons.concat(newPerson));
-    setNewName('');
+    if (persons.some(person => person.name.localeCompare(newName, undefined, { sensitivity: 'accent' }) === 0)) {
+      alert(`${newName} is already on the phonebook`);
+    } else {
+      const newPerson = {
+        name: newName
+      };
+      setPersons(persons.concat(newPerson));
+      setNewName('');
+    }
   };
   
   const handleNewNameChange = (event) => {
