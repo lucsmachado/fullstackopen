@@ -3,12 +3,38 @@ import { useState } from "react";
 const App = () => {
   const [persons, setPersons] = useState([
     {
+       name: 'Arto Hellas', 
+       tel: '040-123456', 
+       id: 1
+    },
+    {
+       name: 'Ada Lovelace', 
+       tel: '39-44-5323523', 
+       id: 2 
+    },
+    {
+       name: 'Dan Abramov', 
+       tel: '12-43-234345', 
+       id: 3 
+    },
+    {
+       name: 'Mary Poppendieck', 
+       tel: '39-23-6423122', 
+       id: 4 
+    },
+    {
       name: 'Lucas Machado',
-      tel: '+55 (12) 3456-7890'
+      tel: '+55 (12) 3456-7890',
+      id: 5
     }
   ]);
   const [newName, setNewName] = useState('');
   const [newTel, setNewTel] = useState('');
+  const [searchName, setSearchName] = useState('');
+
+  const personsToShow = (searchName === '')
+    ? persons
+    : persons.filter(person => person.name.toUpperCase().includes(searchName.toUpperCase()));
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,7 +43,8 @@ const App = () => {
     } else {
       const newPerson = {
         name: newName,
-        tel: newTel
+        tel: newTel,
+        id: persons.length + 1
       };
       setPersons(persons.concat(newPerson));
       setNewName('');
@@ -31,6 +58,10 @@ const App = () => {
 
   const handleNewTelChange = (event) => {
     setNewTel(event.target.value);
+  };
+
+  const handleSearchNameChange = (event) => {
+    setSearchName(event.target.value);
   };
   
   return (
@@ -60,7 +91,11 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name} {person.tel}</p>)}
+      <div>
+        filter by name:
+        <input type="text" value={searchName} onChange={handleSearchNameChange} />
+      </div>
+      {personsToShow.map(person => <p key={person.id}>{person.name} {person.tel}</p>)}
     </>
   );
 };
