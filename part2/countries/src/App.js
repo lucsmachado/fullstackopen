@@ -9,10 +9,10 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('https://restcountries.com/v3.1/all')
-      .then(response => {
-        setCountries(response.data);
-      });
+    .get('https://restcountries.com/v3.1/all')
+    .then(response => {
+      setCountries(response.data);
+    });
   }, []);
 
   useEffect(() => {
@@ -49,7 +49,11 @@ const App = () => {
             )
           );
         } else if (countriesToShow.length === 1) {
-          return <Country country={countriesToShow[0]} />;
+          return (
+            <>
+              <Country country={countriesToShow[0]} />
+            </>
+          );
         }
       })()}
     </>
