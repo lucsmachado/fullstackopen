@@ -13,4 +13,11 @@ const create = (person) => {
     .then(response => response.data);
 };
 
-export default { readAll, create };
+const del = (id) => {
+  return axios
+    .delete(`${baseUrl}/${id}`);
+}
+
+const services = { readAll, create, del };
+
+export default services;

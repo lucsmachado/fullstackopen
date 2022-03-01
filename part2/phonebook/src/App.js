@@ -61,6 +61,20 @@ const App = () => {
   const handleSearchNameChange = (event) => {
     setSearchName(event.target.value);
   };
+
+  const handlePersonDelete = (id) => () => {
+    const personToDelete = persons.find(person => person.id === id);
+    if (window.confirm(`Delete ${personToDelete.name} from the phonebook?`)) {
+      personService
+        .del(id)
+        .then(() => {
+          setPersons(persons.filter(person => person.id !== id));
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
   
   return (
     <>
@@ -74,7 +88,7 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <Filter value={searchName} onChange={handleSearchNameChange} />
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} onPersonDelete={handlePersonDelete} />
     </>
   );
 };
