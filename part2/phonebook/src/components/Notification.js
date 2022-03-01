@@ -1,11 +1,11 @@
 import { getSuggestedQuery } from "@testing-library/react";
 
-const Notification = ({ message }) => {
+const Notification = ({ message, success }) => {
   if (message === null) {
     return null;
   }
 
-  const notificationStyle = {
+  const successStyle = {
     color: 'green',
     backgroundColor: 'lightgrey',
     textSize: 16,
@@ -14,8 +14,10 @@ const Notification = ({ message }) => {
     padding: 10
   };
 
+  const errorStyle = { ...successStyle, color: 'red' };
+
   return (
-    <div style={notificationStyle}>{message}</div>
+    <div style={success ? successStyle : errorStyle}>{message}</div>
   );
 };
 

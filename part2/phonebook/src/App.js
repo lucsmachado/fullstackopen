@@ -11,6 +11,7 @@ const App = () => {
   const [newTel, setNewTel] = useState('');
   const [searchName, setSearchName] = useState('');
   const [notificationMessage, setNotificationMessage] = useState(null);
+  const [operationSuccess, setOperationSuccess] = useState(true);
 
   useEffect(() => {
     personService
@@ -49,10 +50,14 @@ const App = () => {
             setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person));
             setNewName('');
             setNewTel('');
+            setOperationSuccess(true);
             displayTemporaryMessage(`Changed ${updatedPerson.name}'s phone number to ${updatedPerson.tel}`, 5000);
           })
           .catch(error => {
             console.error(error);
+            setOperationSuccess(false);
+            displayTemporaryMessage(`Unable to update number: ${newName} has already been deleted from the phonebook`, 5000);
+            setPersons(persons.filter(person => person.name !== newName));
           });
       }
       return;
@@ -69,6 +74,7 @@ const App = () => {
         setPersons(persons.concat(createdPerson));
         setNewName('');
         setNewTel('');
+        setOperationSuccess(true);
         displayTemporaryMessage(`Added ${createdPerson.name} to the phonebook`, 5000);
       })
       .catch(error => {
@@ -98,6 +104,9 @@ const App = () => {
         })
         .catch(error => {
           console.error(error);
+          setOperationSuccess(false);
+          displayTemporaryMessage(`Unable to delete number: ${personToDelete.name} has already been deleted from the phonebook`, 5000);
+          setPersons(persons.filter(person => person.id !== id));
         });
     }
   };
@@ -105,7 +114,7 @@ const App = () => {
   return (
     <>
       <h2>Phonebook</h2>
-      <Notification message={notificationMessage} />
+      <Notification message={notificationMessage} success={operationSuccess} />
       <PersonForm 
         onSubmit={handleSubmit}
         nameValue={newName}
