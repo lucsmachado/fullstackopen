@@ -24,18 +24,24 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (persons.some(person => person.name.localeCompare(newName, undefined, { sensitivity: 'accent' }) === 0)) {
       alert(`${newName} is already on the phonebook`);
-    } else {
-      const newPerson = {
-        name: newName,
-        tel: newTel,
-        id: persons.length + 1
-      };
-      setPersons(persons.concat(newPerson));
-      setNewName('');
-      setNewTel('');
+      return;
     }
+  
+    const newPerson = {
+      name: newName,
+      tel: newTel
+    };
+
+    axios
+      .post('http://localhost:3001/persons', newPerson)
+      .then(response => {
+        setPersons(persons.concat(response.data));
+        setNewName('');
+        setNewTel('');
+      });
   };
   
   const handleNewNameChange = (event) => {
