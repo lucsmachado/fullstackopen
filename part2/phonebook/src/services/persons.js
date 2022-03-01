@@ -18,6 +18,12 @@ const del = (id) => {
     .delete(`${baseUrl}/${id}`);
 }
 
-const services = { readAll, create, del };
+const update = (id, person) => {
+  return axios
+    .put(`${baseUrl}/${id}`, person)
+    .then(response => response.data);
+}
+
+const services = { readAll, create, del, update };
 
 export default services;

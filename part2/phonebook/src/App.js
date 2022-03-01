@@ -29,7 +29,22 @@ const App = () => {
     event.preventDefault();
 
     if (persons.some(person => person.name.localeCompare(newName, undefined, { sensitivity: 'accent' }) === 0)) {
-      alert(`${newName} is already on the phonebook`);
+      //alert(`${newName} is already on the phonebook`);
+      if (window.confirm(`${newName} is already on the phonebook.\nReplace the old number with a new one?`)) {
+        const currentPerson = persons.find(person => person.name === newName);
+        const replacementPerson = { ...currentPerson, tel: newTel };
+        
+        personService
+          .update(currentPerson.id, replacementPerson)
+          .then(updatedPerson => {
+            setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person));
+            setNewName('');
+            setNewTel('');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
       return;
     }
   
