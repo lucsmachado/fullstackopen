@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 import personService from './services/persons';
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newTel, setNewTel] = useState('');
   const [searchName, setSearchName] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState(null);
 
   useEffect(() => {
     personService
@@ -25,6 +27,13 @@ const App = () => {
     ? persons
     : persons.filter(person => person.name.toUpperCase().includes(searchName.toUpperCase()));
 
+  const displayTemporaryMessage = (message, timer) => {
+    setNotificationMessage(message);
+    setTimeout(() => {
+      setNotificationMessage(null);
+    }, timer);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -40,6 +49,7 @@ const App = () => {
             setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person));
             setNewName('');
             setNewTel('');
+            displayTemporaryMessage(`Changed ${updatedPerson.name}'s phone number to ${updatedPerson.tel}`, 5000);
           })
           .catch(error => {
             console.error(error);
@@ -59,6 +69,7 @@ const App = () => {
         setPersons(persons.concat(createdPerson));
         setNewName('');
         setNewTel('');
+        displayTemporaryMessage(`Added ${createdPerson.name} to the phonebook`, 5000);
       })
       .catch(error => {
         console.error(error);
@@ -94,6 +105,7 @@ const App = () => {
   return (
     <>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} />
       <PersonForm 
         onSubmit={handleSubmit}
         nameValue={newName}
