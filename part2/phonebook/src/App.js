@@ -42,7 +42,7 @@ const App = () => {
       //alert(`${newName} is already on the phonebook`);
       if (window.confirm(`${newName} is already on the phonebook.\nReplace the old number with a new one?`)) {
         const currentPerson = persons.find(person => person.name === newName);
-        const replacementPerson = { ...currentPerson, tel: newTel };
+        const replacementPerson = { ...currentPerson, number: newTel };
         
         personService
           .update(currentPerson.id, replacementPerson)
@@ -51,7 +51,7 @@ const App = () => {
             setNewName('');
             setNewTel('');
             setOperationSuccess(true);
-            displayTemporaryMessage(`Changed ${updatedPerson.name}'s phone number to ${updatedPerson.tel}`, 5000);
+            displayTemporaryMessage(`Changed ${updatedPerson.name}'s phone number to ${updatedPerson.number}`, 5000);
           })
           .catch(error => {
             console.error(error);
@@ -65,7 +65,7 @@ const App = () => {
   
     const newPerson = {
       name: newName,
-      tel: newTel
+      number: newTel
     };
 
     personService

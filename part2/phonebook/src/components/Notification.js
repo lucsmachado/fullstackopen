@@ -1,5 +1,3 @@
-import { getSuggestedQuery } from "@testing-library/react";
-
 const Notification = ({ message, success }) => {
   if (message === null) {
     return null;
