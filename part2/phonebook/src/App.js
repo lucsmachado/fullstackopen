@@ -38,7 +38,7 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (persons.some(person => person.name.localeCompare(newName, undefined, { sensitivity: 'accent' }) === 0)) {
+    if (persons.some(person => person.name.localeCompare(newName, undefined, { sensitivity: 'base' }) === 0)) {
       //alert(`${newName} is already on the phonebook`);
       if (window.confirm(`${newName} is already on the phonebook.\nReplace the old number with a new one?`)) {
         const currentPerson = persons.find(person => person.name === newName);
@@ -78,7 +78,8 @@ const App = () => {
         displayTemporaryMessage(`Added ${createdPerson.name} to the phonebook`, 5000);
       })
       .catch(error => {
-        console.error(error);
+        setOperationSuccess(false);
+        displayTemporaryMessage(error.response.data.error, 5000);
       });
   };
   
